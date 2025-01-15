@@ -3,12 +3,11 @@ package model
 import "time"
 
 type Transaction struct {
-	ID        int64         `gorm:"primaryKey;autoIncrement:false" json:"id"`
-	Amount    float64       `gorm:"type:decimal(20,2);not null" json:"amount"`
-	Type      string        `gorm:"type:varchar(255);not null;index" json:"type"`
-	ParentID  *int64        `gorm:"index" json:"parent_id,omitempty"`
-	Parent    *Transaction  `gorm:"foreignKey:ParentID" json:"-"`
-	Children  []Transaction `gorm:"foreignKey:ParentID" json:"-"`
+	ID        int64        `gorm:"primaryKey;autoIncrement:false" json:"id"`
+	Amount    float64      `gorm:"type:decimal(20,2);not null" json:"amount"`
+	Type      string       `gorm:"type:varchar(255);not null;index" json:"type"`
+	ParentID  *int64       `gorm:"index" json:"parent_id,omitempty"`
+	Parent    *Transaction `gorm:"foreignKey:ParentID" json:"-"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
