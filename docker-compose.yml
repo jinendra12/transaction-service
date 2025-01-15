@@ -1,0 +1,38 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: deployments/docker/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=transaction_db
+      - DB_PORT=5432
+    networks:
+      - transaction-network
+
+  db:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=transaction_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - transaction-network
+
+volumes:
+  postgres_data:
+
+networks:
+  transaction-network:
+    driver: bridge
+  
